@@ -6,7 +6,8 @@ import Header from './components/Header';
 import RouterConfig from './config/RouterConfig';
 import Drawer from '@mui/material/Drawer';
 import { useDispatch, useSelector } from 'react-redux';
-import { calculateBasket, setDrawer } from './redux/slices/basketSlice';
+import { calculateBasket, setDrawer, removeFromBasket } from './redux/slices/basketSlice';
+import Loading from './components/Loading';
 
 function App() {
   const { products, drawer, totalAmount } = useSelector((store) => store.basket);
@@ -16,13 +17,18 @@ function App() {
     dispatch(calculateBasket());
   }, [products, dispatch]); // Recalculate whenever products change
 
+  const handleDelete = (id) => {
+    dispatch(removeFromBasket({ id }));
+    dispatch(calculateBasket());
+  };
+
   return (
     <div>
       <PageContainer>
         <Header />
       </PageContainer>
       <RouterConfig />
-
+      <Loading/>
       <Drawer anchor="right" open={drawer} onClose={() => dispatch(setDrawer())}>
         {products.map((product) => (
           <div key={product.id} className="product">
@@ -31,7 +37,7 @@ function App() {
               <p>{product.title} ({product.count})</p>
               <p>{product.price} $</p>
             </div>
-            <Button variant="contained" color="primary">
+            <Button variant="contained" color="primary" onClick={() => handleDelete(product.id)}>
               delete
             </Button>
           </div>
