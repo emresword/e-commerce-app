@@ -68,7 +68,7 @@ function ProductDetails() {
                     </div>
 
                     <p><strong>Title:</strong> {selectedProduct.title}</p>
-                    <p><strong>Price:</strong> {selectedProduct.price} $</p>
+                    <h3><strong>Price:</strong> {selectedProduct.price} $</h3>
                     <p><strong>Description:</strong> {selectedProduct.description}</p>
                     <div style={{ display: "flex", alignItems: "center" }}>
                         <CiCirclePlus onClick={increment} style={{ fontSize: '40px', cursor: 'pointer' }} />
